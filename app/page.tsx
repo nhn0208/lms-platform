@@ -1,9 +1,7 @@
-import { Button } from "@/components/ui/button"
-export default function Home() {
-  return (
-    <div>
-      <p>Hello world</p>
-      <Button variant={"destructive"}>Click Me</Button>
-    </div>
-  )
+import { currentUser } from "@clerk/nextjs";
+import type { User } from "@clerk/nextjs/api";
+ 
+export default async function Page() {
+  const user: User | null = await currentUser();
+  // ...
 }
