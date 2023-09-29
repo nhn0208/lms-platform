@@ -1,0 +1,48 @@
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Course {
+  id String @id @default(uuid())
+  userId String
+  title String @db.Text
+  description String? @db.Text
+  imageUrl String? @db.Text
+  price Float?
+  isPublised Boolean @default(false)
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+
+  categoriesId Category? @relation(fields: [categoryId],references: [id])
+  categoryId String?
+
+  attachment Attachment[]
+
+  @@index([categoryId])
+}
+
+model Attachment{
+  id String @id @default(uuid())
+  name String
+  url String @db.Text
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+
+  course Course @relation(fields: [courseId],references: [id],onDelete: Cascade)
+  courseId String
+
+  @@index([courseId])
+}
+
+model Category {
+  id String @id @default(uuid())
+  name String @unique
+
+  course Course[]
+}
