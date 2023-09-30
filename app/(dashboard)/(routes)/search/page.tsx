@@ -5,8 +5,19 @@ import { db } from "@/lib/db";
 
 import { Categories } from "./_components/category"
 import { SearchInput } from "@/components/search-input";
+import { getCourses } from "@/actions/get-courses";
+import { CoursesList } from "@/components/course-list";
 
-const SearchPage = async () => {
+interface SearchPageProps {
+  searchParams: {
+    title: string;
+    categoryId: string;
+  }
+};
+
+const SearchPage = async ({
+  searchParams
+}: SearchPageProps) => {
   const { userId } = auth();
   if (!userId) return redirect('/');
 
@@ -15,15 +26,22 @@ const SearchPage = async () => {
       name: "asc"
     }
   })
+
+  const courses = await getCourses({
+    userId,
+    ...searchParams,
+  });
+  
   return (
-    <>
-      <div className="px-6 pt-6 md:hidden md:mb-0 block">
+    <div className="p-6">
+      <div className="md:hidden md:mb-0 block">
           <SearchInput/>
       </div>
-      <div className="p-6">
+      <div className="space-y-4 pb-6">
         <Categories items={categories} />
       </div>
-    </>
+      <CoursesList items={courses} />
+    </div>
   )
 }
 

@@ -6,6 +6,7 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 model Course {
@@ -19,14 +20,15 @@ model Course {
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
 
-  categoriesId Category? @relation(fields: [categoryId],references: [id])
+  category Category? @relation(fields: [categoryId],references: [id])
   categoryId String?
 
   chapters Chapter[]
   attachment Attachment[]
-  puchase Purchase[]
+  purchases Purchase[]
 
   @@index([categoryId])
+  @@fulltext([title])
 }
 
 model Attachment{
