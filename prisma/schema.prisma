@@ -15,7 +15,7 @@ model Course {
   description String? @db.Text
   imageUrl String? @db.Text
   price Float?
-  isPublised Boolean @default(false)
+  isPublished Boolean @default(false)
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
 
