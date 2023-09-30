@@ -10,6 +10,7 @@ import { ImageForm } from "./_components/ImageForm";
 import { CategoryForm } from "./_components/CategoryForm";
 import { PriceForm } from "./_components/PriceForm";
 import { AttachmentForm } from "./_components/AttachmentForm";
+import { ChapterForm } from "./_components/Chapter";
 
 const CourseIdPage = async (
     { params }: {
@@ -22,14 +23,20 @@ const CourseIdPage = async (
 
     const course = await db.course.findUnique({
         where: {
-            id : params.courseId
+            id : params.courseId,
+            userId
         },
         include: {
-            attachment: {
-              orderBy: {
-                createAt: "desc",
-              },
+          chapters:{
+            orderBy: {
+              position:"asc"
+            }
+          },
+          attachment: {
+            orderBy: {
+              createAt: "desc",
             },
+          },
         },
     })
 
@@ -46,7 +53,8 @@ const CourseIdPage = async (
         course.description,
         course.imageUrl,
         course.price,
-        course.categoryId
+        course.categoryId,
+        course.chapters.some(chapter => chapter.isPublished)
     ]
 
     const totalFields = requiredFields.length;
@@ -92,7 +100,9 @@ const CourseIdPage = async (
                         </h2>
                       </div>
                       <div>
-                        TODO: Chapters
+                        <ChapterForm 
+                          initialData={course}
+                          courseId={course.id} />
                       </div>
                     </div>
                     <div>
