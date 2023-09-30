@@ -8,7 +8,7 @@ const Sidebar = () => {
         <div className="h-full border-r flex flex-col overflow-y-auto bg-white shadow-sm">
 
             {/* Logo */}
-            <div className="p-6">
+            <div className="p-6 mb-[6px]">
                 <Logo/>
             </div>
 
