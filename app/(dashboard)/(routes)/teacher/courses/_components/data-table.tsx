@@ -67,7 +67,7 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
-        <Link href={"/courses/create"}>
+        <Link href={"/teacher/create"}>
           <Button>
             <PlusCircle className="h4 w-4 mr-2" />New course
           </Button>

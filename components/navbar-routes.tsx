@@ -12,18 +12,12 @@ const NavbarRoutes = () => {
     const pathname = usePathname();
 
     const isTeacherPage = pathname?.startsWith("/teacher");
-    const isPlayerPage = pathname?.includes("/chapter");
-    const isSearchPage = pathname === "/search";
+    const isCoursePage = pathname?.startsWith("/course");
 
     return ( 
-        <div className="w-full flex items-center justify-between">
-            {isSearchPage && (
-                <div className="md:block hidden ">
-                <SearchInput />
-                </div>
-            )}
-            <div className="flex gap-x-2 ml-auto">
-                {isTeacherPage || isPlayerPage ? (
+        <div className="w-full flex items-center justify-between">     
+            <div className="flex items-center gap-x-2 ml-auto">
+                {isTeacherPage || isCoursePage ? (
                     <Link href={"/"}>
                         <Button>
                             <LogOut className="w-4 h-4 mr-2"/>
